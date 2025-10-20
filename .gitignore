@@ -1,0 +1,16 @@
+# Node
+node_modules
+npm-debug.log*
+.yarn/*
+.pnp.*
+
+# Env
+.env
+.env.*
+backend/.env
+frontend/.env.local
+
+# Build
+dist
+frontend/dist
+backend/dist
