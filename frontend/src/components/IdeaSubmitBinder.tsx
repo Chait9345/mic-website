@@ -16,10 +16,7 @@ export default function IdeaSubmitBinder({
     const successEl = successSelector ? document.querySelector(successSelector) : null;
     const errorEl = errorSelector ? document.querySelector(errorSelector) : null;
 
-    if (!form) {
-      console.error(`[IdeaSubmitBinder] Form with ID '${formId}' not found.`);
-      return;
-    }
+    if (!form) return;
 
     const handleSubmit = async (e: Event) => {
       e.preventDefault();
@@ -33,9 +30,8 @@ export default function IdeaSubmitBinder({
         idea: formData.get("idea"),
       };
 
-      // ✅ Direct backend URL to bypass Vercel rewrite issues
-      const url = "https://mic-website-v8bu.onrender.com/api/ideas";
-      console.log("[POST]", url, payload);
+      const baseUrl = import.meta.env.VITE_API_BASE_URL;
+      const url = `${baseUrl.replace(/\/$/, "")}/api/ideas`;
 
       try {
         const res = await fetch(url, {
@@ -44,12 +40,16 @@ export default function IdeaSubmitBinder({
           body: JSON.stringify(payload),
         });
 
-        if (!res.ok) throw new Error(`Failed with status ${res.status}`);
+        if (!res.ok) {
+          const errorText = await res.text().catch(() => "Unknown error");
+          console.error("❌ Backend error:", errorText);
+          throw new Error(`Failed ${res.status}: ${errorText}`);
+        }
 
         if (successEl) successEl.textContent = "✅ Your idea was submitted successfully!";
         form.reset();
       } catch (err) {
-        console.error("❌ Submission error:", err);
+        console.error("❌ Request failed:", err);
         if (errorEl) errorEl.textContent = "❌ Something went wrong. Please try again.";
       }
     };
