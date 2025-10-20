@@ -1,5 +1,8 @@
 {
   "rewrites": [
-    { "source": "/api/:path*", "destination": "https://mic-website-v8bu.onrender.com/api/:path*" }
+    {
+      "source": "/api/:path*",
+      "destination": "https://mic-website-v8bu.onrender.com/api/:path*"
+    }
   ]
 }
