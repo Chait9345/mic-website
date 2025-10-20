@@ -154,7 +154,7 @@ function Frame95() {
 
 function RegisterButton1() {
   return (
-    <a className="absolute bg-[#232a91] box-border content-stretch cursor-pointer flex flex-col gap-[10px] h-[28px] items-start left-[200px] overflow-clip p-[4px] top-[1090px] w-[98px] hover:opacity-90 transition-opacity" href="https://www.ecellmit.in/" target="_blank" rel="noopener noreferrer">
+    <a className="absolute bg-[#232a91] box-border content-stretch cursor-pointer flex flex-col gap-[10px] h-[28px] items-start left-[200px] overflow-clip p-[4px] top-[1090px] w-[98px] hover:opacity-90 transition-opacity" href="https://forms.office.com/pages/responsepage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAXf2BjpUQVdEVURXTDEwV1FBSjBJMjFWNVJYM0VKNS4u&origin=lprLink&route=shorturl" target="_blank" rel="noopener noreferrer">
       <Frame3 />
     </a>
   );
@@ -162,7 +162,7 @@ function RegisterButton1() {
 
 function RegisterButton2() {
   return (
-    <a className="absolute bg-[#232a91] box-border content-stretch cursor-pointer flex flex-col gap-[10px] h-[28px] items-start left-[200px] overflow-clip p-[4px] top-[1455px] w-[98px] hover:opacity-90 transition-opacity" href="https://www.ecellmit.in/" target="_blank" rel="noopener noreferrer">
+    <a className="absolute bg-[#232a91] box-border content-stretch cursor-pointer flex flex-col gap-[10px] h-[28px] items-start left-[200px] overflow-clip p-[4px] top-[1455px] w-[98px] hover:opacity-90 transition-opacity" href="https://forms.office.com/pages/responsepage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAXf2BjpUQVdEVURXTDEwV1FBSjBJMjFWNVJYM0VKNS4u&origin=lprLink&route=shorturl" target="_blank" rel="noopener noreferrer">
       <Frame3 />
     </a>
   );
@@ -170,7 +170,7 @@ function RegisterButton2() {
 
 function RegisterButton3() {
   return (
-    <a className="absolute bg-[#232a91] box-border content-stretch cursor-pointer flex flex-col gap-[10px] h-[28px] items-start left-[200px] overflow-clip p-[4px] top-[1820px] w-[98px] hover:opacity-90 transition-opacity" href="https://www.ecellmit.in/" target="_blank" rel="noopener noreferrer">
+    <a className="absolute bg-[#232a91] box-border content-stretch cursor-pointer flex flex-col gap-[10px] h-[28px] items-start left-[200px] overflow-clip p-[4px] top-[1820px] w-[98px] hover:opacity-90 transition-opacity" href="https://forms.office.com/pages/responsepage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAXf2BjpUQVdEVURXTDEwV1FBSjBJMjFWNVJYM0VKNS4u&origin=lprLink&route=shorturl" target="_blank" rel="noopener noreferrer">
       <Frame3 />
     </a>
   );
@@ -178,7 +178,7 @@ function RegisterButton3() {
 
 function RegisterButton4() {
   return (
-    <a className="absolute bg-[#232a91] box-border content-stretch cursor-pointer flex flex-col gap-[10px] h-[28px] items-start left-[200px] overflow-clip p-[4px] top-[2185px] w-[98px] hover:opacity-90 transition-opacity" href="https://www.ecellmit.in/" target="_blank" rel="noopener noreferrer">
+    <a className="absolute bg-[#232a91] box-border content-stretch cursor-pointer flex flex-col gap-[10px] h-[28px] items-start left-[200px] overflow-clip p-[4px] top-[2185px] w-[98px] hover:opacity-90 transition-opacity" href="https://forms.office.com/pages/responsepage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAXf2BjpUQVdEVURXTDEwV1FBSjBJMjFWNVJYM0VKNS4u&origin=lprLink&route=shorturl" target="_blank" rel="noopener noreferrer">
       <Frame3 />
     </a>
   );
