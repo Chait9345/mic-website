@@ -30,8 +30,11 @@ export default function IdeaSubmitBinder({
         idea: formData.get("idea"),
       };
 
-      const baseUrl = import.meta.env.VITE_API_BASE_URL;
-      const url = `${baseUrl.replace(/\/$/, "")}/api/ideas`;  // ensures no double slashes
+      // 🔥 Hardcoded backend URL for now
+      const RENDER_API = "https://mic-website-v8bu.onrender.com";
+      const url = `${RENDER_API}/api/ideas`;
+
+      console.log("[POST]", url, payload);
 
       try {
         const res = await fetch(url, {
@@ -40,11 +43,12 @@ export default function IdeaSubmitBinder({
           body: JSON.stringify(payload),
         });
 
-        if (!res.ok) throw new Error("Failed to submit");
+        if (!res.ok) throw new Error(`Failed to submit: ${res.status}`);
 
         if (successEl) successEl.textContent = "✅ Your idea was submitted successfully!";
         form.reset();
       } catch (err) {
+        console.error("Submission error:", err);
         if (errorEl) errorEl.textContent = "❌ Something went wrong. Please try again.";
       }
     };
