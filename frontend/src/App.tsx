@@ -22,7 +22,9 @@ import imgImage3 from "figma:asset/17ed33bb30e73044470782b256cd0c3b146981df.png"
 import imgImage4 from "figma:asset/3c1f3a38ce34f2226de5a515e9e560481961ef08.png";
 import imgImage5 from "figma:asset/fced1c2bb6415e9d52140a3b9d55e9810221b3f2.png";
 import JoinNowButton from "./components/JoinNowButton";
-import IdeaForm from "./components/IdeaForm";
+import IdeaSubmitBinder from "./components/IdeaSubmitBinder";
+console.log("[ENV CHECK]", import.meta.env.VITE_API_BASE_URL);
+
 
 /**
  * @figmaAssetKey 040a59688f317a07942b7cbb3bf69bd146d9899e
