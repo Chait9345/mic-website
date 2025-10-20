@@ -9,16 +9,17 @@ interface Props {
 export default function IdeaSubmitBinder({
   formId,
   successSelector,
-  errorSelector,
+  errorSelector
 }: Props) {
   useEffect(() => {
     const form = document.getElementById(formId) as HTMLFormElement | null;
     const successEl = successSelector ? document.querySelector(successSelector) : null;
     const errorEl = errorSelector ? document.querySelector(errorSelector) : null;
 
-    console.log("[BINDER] loaded, found form?", !!form);
-
-    if (!form) return;
+    if (!form) {
+      console.error(`[IdeaSubmitBinder] Form with ID '${formId}' not found.`);
+      return;
+    }
 
     const handleSubmit = async (e: Event) => {
       e.preventDefault();
@@ -32,7 +33,7 @@ export default function IdeaSubmitBinder({
         idea: formData.get("idea"),
       };
 
-      // 🔥 Hardcode the Render API — this avoids Vercel 405
+      // ✅ Direct backend URL to bypass Vercel rewrite issues
       const url = "https://mic-website-v8bu.onrender.com/api/ideas";
       console.log("[POST]", url, payload);
 
@@ -43,12 +44,12 @@ export default function IdeaSubmitBinder({
           body: JSON.stringify(payload),
         });
 
-        if (!res.ok) throw new Error(`Failed (${res.status})`);
+        if (!res.ok) throw new Error(`Failed with status ${res.status}`);
 
         if (successEl) successEl.textContent = "✅ Your idea was submitted successfully!";
         form.reset();
       } catch (err) {
-        console.error("Submission error:", err);
+        console.error("❌ Submission error:", err);
         if (errorEl) errorEl.textContent = "❌ Something went wrong. Please try again.";
       }
     };
