@@ -1,39 +1,42 @@
 import express from "express";
-import morgan from "morgan";
-import helmet from "helmet";
 import cors from "cors";
-import dotenv from "dotenv";
-import path from "path";
-import { router } from "./routes";
-// ⬆️ remove: import { fileURLToPath } from "url";
-
-dotenv.config();
+import helmet from "helmet";
+import morgan from "morgan";
 
 const app = express();
 
-// ⬇️ remove these ESM-only lines:
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
-
-// Security + logs + JSON
-app.use(helmet());
-app.use(morgan("dev"));
-app.use(express.json({ limit: "1mb" }));
-
-// CORS
+// ✅ CORS configuration
 const allowOrigins =
   process.env.NODE_ENV === "production"
-    ? (process.env.FRONTEND_ORIGIN ? [process.env.FRONTEND_ORIGIN] : ["*"])
+    ? (process.env.FRONTEND_ORIGIN ? [process.env.FRONTEND_ORIGIN] : [])
     : (process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(",") : ["http://localhost:5173"]);
 
-app.use(cors({ origin: allowOrigins, credentials: true }));
+const corsConfig: cors.CorsOptions = {
+  origin: allowOrigins,
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "x-api-key"],
+};
 
-// Optional: serve any admin static files if you keep /public
-app.use(express.static(path.join(__dirname, "..", "public")));
+app.use(cors(corsConfig));
+app.options("*", cors(corsConfig)); // ✅ handles preflight OPTIONS requests globally
 
-app.get("/health", (_req, res) => res.json({ ok: true }));
+app.use(helmet());
+app.use(morgan("dev"));
+app.use(express.json());
 
-// API routes
-app.use("/api", router);
+// ✅ health check route
+app.get("/", (req, res) => {
+  res.send("API is running 🚀");
+});
+
+// ✅ Example ideas POST route (keep your real logic here)
+import ideasRouter from "./routes/ideas"; 
+app.use("/api/ideas", ideasRouter);
+
+// catch-all for 404
+app.use((req, res) => {
+  res.status(404).json({ error: "Not Found" });
+});
 
 export default app;
