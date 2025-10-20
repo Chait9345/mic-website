@@ -11,3 +11,5 @@ router.post("/ideas", Ideas.createIdea);
 
 // Admin (x-api-key header required)
 router.post("/links", requireAdmin, Links.upsertLink);
+
+export default router;

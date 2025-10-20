@@ -1,26 +1,29 @@
 import type { Request, Response } from "express";
-import { prisma } from "../lib/prisma";
-import { z } from "zod";
+import pool from "../db";
 
-const LinkSchema = z.object({
-  key: z.string().min(1),     // e.g. "join_now"
-  label: z.string().min(1),   // e.g. "Join Now"
-  url: z.string().url()       // e.g. "https://..."
-});
-
-// Public: list all links (frontend reads this to render dynamic CTAs)
 export async function listLinks(_req: Request, res: Response) {
-  const links = await prisma.link.findMany({ orderBy: { updatedAt: "desc" } });
-  res.json(links);
+  try {
+    const { rows } = await pool.query("SELECT id, title, url FROM links ORDER BY id DESC");
+    return res.json(rows);
+  } catch (err) {
+    console.error("Error listing links:", err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 }
 
-// Admin: create or update a link by key
 export async function upsertLink(req: Request, res: Response) {
-  const { key, label, url } = LinkSchema.parse(req.body);
-  const saved = await prisma.link.upsert({
-    where: { key },
-    update: { label, url },
-    create: { key, label, url }
-  });
-  res.json(saved);
+  try {
+    const { id, title, url } = req.body as { id?: number; title?: string; url?: string };
+    if (!title || !url) return res.status(400).json({ error: "Missing fields" });
+
+    if (id) {
+      await pool.query("UPDATE links SET title=$1, url=$2 WHERE id=$3", [title, url, id]);
+    } else {
+      await pool.query("INSERT INTO links (title, url) VALUES ($1, $2)", [title, url]);
+    }
+    return res.status(200).json({ ok: true });
+  } catch (err) {
+    console.error("Error upserting link:", err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 }
