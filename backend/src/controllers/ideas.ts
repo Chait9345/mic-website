@@ -1,29 +1,31 @@
-import type { Request, Response } from "express";
-import { prisma } from "../lib/prisma";
-import { z } from "zod";
+import { Request, Response } from "express";
+import { PrismaClient } from "@prisma/client";
 
-// Frontend form sends exactly 3 fields
-const IdeaSchema = z.object({
-  name: z.string().min(1),
-  email: z.string().email(),
-  idea: z.string().min(5),
-});
+const prisma = new PrismaClient();
 
-// Public: accept idea submissions
 export async function createIdea(req: Request, res: Response) {
-  const { name, email, idea } = IdeaSchema.parse(req.body);
+  try {
+    const { name, email, idea } = req.body as {
+      name?: string; email?: string; idea?: string;
+    };
 
-  // derive a short title for DB from the idea text
-  const ideaTitle = idea.length > 60 ? idea.slice(0, 60) + "…" : idea;
-
-  const saved = await prisma.ideaSubmission.create({
-    data: {
-      teamName: name,
-      contactEmail: email,
-      ideaTitle,
-      ideaSummary: idea
+    if (!name || !email || !idea) {
+      return res.status(400).json({ error: "Missing fields" });
     }
-  });
 
-  res.status(201).json({ ok: true, id: saved.id });
+    // Map your form fields -> Prisma model fields
+    const created = await prisma.ideaSubmission.create({
+      data: {
+        teamName: String(name),
+        contactEmail: String(email),
+        ideaTitle: String(idea).slice(0, 80) || "Idea", // short title from idea
+        ideaSummary: String(idea),                       // full idea text
+      },
+    });
+
+    return res.status(201).json({ ok: true, id: created.id });
+  } catch (err) {
+    console.error("Error inserting idea:", err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 }
