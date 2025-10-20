@@ -1,11 +1,11 @@
-import type { Request, Response } from "express";
+import { Router } from "express";
 import pool from "../db";
 
-export async function createIdea(req: Request, res: Response) {
+const router = Router();
+
+router.post("/", async (req, res) => {
   try {
-    const { name, email, idea } = req.body as {
-      name?: string; email?: string; idea?: string;
-    };
+    const { name, email, idea } = req.body;
     if (!name || !email || !idea) {
       return res.status(400).json({ error: "Missing fields" });
     }
@@ -15,9 +15,11 @@ export async function createIdea(req: Request, res: Response) {
       [name, email, idea]
     );
 
-    return res.status(201).json({ message: "Idea submitted successfully" });
+    res.status(201).json({ ok: true });
   } catch (err) {
     console.error("Error inserting idea:", err);
-    return res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "Internal server error" });
   }
-}
+});
+
+export default router;   // <-- default export
